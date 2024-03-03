@@ -1,5 +1,5 @@
 import torch
-if "AMD" in torch.cuda.get_device_name():
+if "AMD" in torch.cuda.get_device_name() or "Radeon" in torch.cuda.get_device_name():
     try:
         from flash_attn import flash_attn_func
         sdpa = torch.nn.functional.scaled_dot_product_attention
@@ -22,3 +22,5 @@ if "AMD" in torch.cuda.get_device_name():
         print("# # #\nAMD GO FAST\n# # #")
     except ImportError as e:
         print(f"# # #\nAMD GO SLOW\n{e}\n# # #")
+else:
+    print(f"# # #\nAMD GO SLOW\nCould not detect AMD GPU from: {torch.cuda.get_device_name()}\n# # #")
