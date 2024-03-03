@@ -20,5 +20,5 @@ if "AMD" in torch.cuda.get_device_name():
 
         torch.nn.functional.scaled_dot_product_attention = sdpa_hijack
         print("# # #\nAMD GO FAST\n# # #")
-    except ImportError:
-        pass
+    except ImportError as e:
+        print(f"# # #\nAMD GO SLOW\n{e}\n# # #")
