@@ -33,7 +33,7 @@ if "AMD" in torch.cuda.get_device_name() or "Radeon" in torch.cuda.get_device_na
     except ImportError as e:
         print(f"# # #\nAMD GO SLOW\n{e}\n# # #")
 else:
-    print(f"# # #\nAMD GO SLOW\nCould not detect AMD GPU from: {torch.cuda.get_device_name()}\n# # #")
+    print(f"# # #\nAMD GO SLOW\nCould not detect AMD GPU from:\n{torch.cuda.get_device_name()}\n# # #")
 
 NODE_CLASS_MAPPINGS = {}
 NODE_DISPLAY_NAME_MAPPINGS = {}
