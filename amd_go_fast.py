@@ -1,7 +1,9 @@
 import torch
+
 if "AMD" in torch.cuda.get_device_name() or "Radeon" in torch.cuda.get_device_name():
     try:
         from flash_attn import flash_attn_func
+
         sdpa = torch.nn.functional.scaled_dot_product_attention
 
         def sdpa_hijack(query, key, value, attn_mask=None, dropout_p=0.0, is_causal=False, scale=None):
@@ -15,7 +17,15 @@ if "AMD" in torch.cuda.get_device_name() or "Radeon" in torch.cuda.get_device_na
                     softmax_scale=scale,
                 ).transpose(1, 2)
             else:
-                hidden_states = sdpa(query=query, key=key, value=value, attn_mask=attn_mask, dropout_p=dropout_p, is_causal=is_causal, scale=scale)
+                hidden_states = sdpa(
+                    query=query,
+                    key=key,
+                    value=value,
+                    attn_mask=attn_mask,
+                    dropout_p=dropout_p,
+                    is_causal=is_causal,
+                    scale=scale,
+                )
             return hidden_states
 
         torch.nn.functional.scaled_dot_product_attention = sdpa_hijack
