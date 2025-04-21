@@ -1,3 +1,12 @@
+### Dead Branch?
+Seems like `https://github.com/ROCm/flash-attention@howiejay/navi_support` which this patch depends on is no longer functional. There are a few options available
+
+ 1. Use pytorch nightly with `--use-pytorch-cross-attention`, remove this node entirely
+    - Speed is close for sdxl, potentially faster for other models.
+    - Set `PYTORCH_TUNABLEOP_ENABLED=1` for extra throughput at the cost of kernel latency. While CUDA doesn't get anything from this, ROCm can get up to 20%.
+ 2. Compile it yourself using an updated branch as described https://github.com/Beinsezii/comfyui-amd-go-fast/discussions/6#discussioncomment-12901739
+ 3. Use the prebuilt wheels in the description below, limit `transformers<4.50` to avoid import errors
+
 # Installation
 ### Step 1
 #### Get the file
